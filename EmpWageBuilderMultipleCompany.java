@@ -5,6 +5,7 @@ import java.util.Map;
 interface IEmpWageBuilder {
 	void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth);
 	void computeEmpWage();
+	int getTotalWageByComapanyName(final String name);
 }
 
 public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
@@ -21,7 +22,19 @@ public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
                 final IEmpWageBuilder empBuilder = new EmpWageBuilderMultipleCompany();
                 empBuilder.addCompany("TATA", 20, 20, 100);
                 empBuilder.addCompany("BATA", 15, 25, 100);
+                
                 empBuilder.computeEmpWage();
+                
+                final int totalWage = empBuilder.getTotalWageByComapanyName("TATA");
+                System.out.println("Total Employee wage for TATA is:"+totalWage);
+        }
+        /**
+         *get total wages by company name 
+         **/
+        @Override
+        public int getTotalWageByComapanyName(final String name) {
+        	final int totalWage = companyWages.get(name);
+			return totalWage;
         }
         
         @Override
