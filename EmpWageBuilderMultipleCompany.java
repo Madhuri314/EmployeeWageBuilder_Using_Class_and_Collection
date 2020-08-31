@@ -1,33 +1,40 @@
-public class EmpWageBuilderMultipleCompany {
+import java.util.List;
+import java.util.ArrayList;
 
-        private int noOfCompany = 0;
-        private Company[] companies;
+interface IEmpWageBuilder {
+	void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth);
+	void computeEmpWage();
+}
+
+public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
+
+        private List<Company> companies;
 
         public EmpWageBuilderMultipleCompany() {
-                companies = new Company[5];
+                companies = new ArrayList<Company>();
         }
 
         public static void main(String[] args) {
-                final EmpWageBuilderMultipleCompany empBuilder = new EmpWageBuilderMultipleCompany();
+                final IEmpWageBuilder empBuilder = new EmpWageBuilderMultipleCompany();
                 empBuilder.addCompany("TATA", 20, 20, 100);
                 empBuilder.addCompany("BATA", 15, 25, 100);
 
                 empBuilder.computeEmpWage();
         }
-
+        
+        @Override
         public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth){
-                companies[noOfCompany] = new Company(name, empRate, numOfWorkingDays, maxHrsInMonth);
-                noOfCompany++;
+                companies.add(new Company(name, empRate, numOfWorkingDays, maxHrsInMonth));
         }
-
-
-        private void computeEmpWage(){
-                for(int i = 0; i< noOfCompany; i++){
-                        final int totalWage = computeEmpWage(companies[i]);
-                        companies[i].setTotalEmpWage(totalWage);
-                        System.out.println(companies[i]);
+        
+        @Override
+        public void computeEmpWage(){
+                for(int i = 0; i< companies.size(); i++){
+                		final Company company=companies.get(i);
+                        final int totalWage = computeEmpWage(company);
+                        company.setTotalEmpWage(totalWage);
+                        System.out.println(company);
                 }
-
         }
         /**
          * calculate total employee wages
