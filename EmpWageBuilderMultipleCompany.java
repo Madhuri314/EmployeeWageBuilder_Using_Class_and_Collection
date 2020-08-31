@@ -22,7 +22,7 @@ public class EmpWageBuilderMultipleCompany {
 
         private void computeEmpWage(){
                 for(int i = 0; i< companies.size(); i++){
-                		final Company company=companies.get(i);
+                	final Company company = companies.get(i);
                         final int totalWage = computeEmpWage(company);
                         company.setTotalEmpWage(totalWage);
                         System.out.println(company);
