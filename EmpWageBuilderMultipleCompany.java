@@ -1,12 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-
-interface IEmpWageBuilder {
-	void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth);
-	void computeEmpWage();
-}
-
-public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
+public class EmpWageBuilderMultipleCompany {
 
         private List<Company> companies;
 
@@ -15,20 +9,18 @@ public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
         }
 
         public static void main(String[] args) {
-                final IEmpWageBuilder empBuilder = new EmpWageBuilderMultipleCompany();
+                final EmpWageBuilderMultipleCompany empBuilder = new EmpWageBuilderMultipleCompany();
                 empBuilder.addCompany("TATA", 20, 20, 100);
                 empBuilder.addCompany("BATA", 15, 25, 100);
 
                 empBuilder.computeEmpWage();
         }
-        
-        @Override
+
         public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth){
                 companies.add(new Company(name, empRate, numOfWorkingDays, maxHrsInMonth));
         }
-        
-        @Override
-        public void computeEmpWage(){
+
+        private void computeEmpWage(){
                 for(int i = 0; i< companies.size(); i++){
                 		final Company company=companies.get(i);
                         final int totalWage = computeEmpWage(company);
