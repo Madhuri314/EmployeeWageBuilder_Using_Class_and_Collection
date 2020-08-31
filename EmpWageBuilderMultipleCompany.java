@@ -1,32 +1,43 @@
 import java.util.List;
 import java.util.ArrayList;
-public class EmpWageBuilderMultipleCompany {
+import java.util.HashMap;
+import java.util.Map;
+interface IEmpWageBuilder {
+	void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth);
+	void computeEmpWage();
+}
+
+public class EmpWageBuilderMultipleCompany implements IEmpWageBuilder {
 
         private List<Company> companies;
+        private Map<String,Integer> companyWages;
 
         public EmpWageBuilderMultipleCompany() {
                 companies = new ArrayList<Company>();
+                companyWages = new HashMap<String, Integer>();
         }
 
         public static void main(String[] args) {
-                final EmpWageBuilderMultipleCompany empBuilder = new EmpWageBuilderMultipleCompany();
+                final IEmpWageBuilder empBuilder = new EmpWageBuilderMultipleCompany();
                 empBuilder.addCompany("TATA", 20, 20, 100);
                 empBuilder.addCompany("BATA", 15, 25, 100);
-
                 empBuilder.computeEmpWage();
         }
-
+        
+        @Override
         public void addCompany(final String name, final int empRate, final int numOfWorkingDays, final int maxHrsInMonth){
                 companies.add(new Company(name, empRate, numOfWorkingDays, maxHrsInMonth));
         }
-
-        private void computeEmpWage(){
+        
+        @Override
+        public void computeEmpWage(){
                 for(int i = 0; i< companies.size(); i++){
-                	final Company company = companies.get(i);
+                		final Company company=companies.get(i);
                         final int totalWage = computeEmpWage(company);
                         company.setTotalEmpWage(totalWage);
-                        System.out.println(company);
+                        companyWages.put(company.getName(),totalWage);
                 }
+                System.out.println("Values in HashMap are: " +companyWages.toString());
         }
         /**
          * calculate total employee wages
